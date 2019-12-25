@@ -4,16 +4,18 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { User } from './auth/user/user.entity';
+import { ProductModule } from './product/product.module';
+import { Product } from './product/model/product.entity';
 
 @Module({
-  imports: [AuthModule,
+  imports: [AuthModule, ProductModule,
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'base.sqlite',
-      entities: [User],
+      entities: [User, Product],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User])],
+    TypeOrmModule.forFeature([User, Product])],
   controllers: [AppController],
   providers: [AppService],
 })

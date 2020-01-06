@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../user/user.entity';
-import { Product } from '../../product/model/product.entity';
 
 @Injectable()
 export class AuthService {
@@ -12,30 +11,40 @@ export class AuthService {
   }
 
   public async login(user: User): Promise<any> {
-    return this.validateUser(user.name, user.password).then((userData) => {
-      if (!userData) {
+    return this.validateUser(user.name, user.password).then((result) => {
+      if (!result) {
         return { code: 'NOT_FOUND' };
       }
-
-      const payload = { sub: user.id, username: user.name };
-
+      const payload = { sub: result.id, username: result.name };
       return {
         access_token: this.jwtService.sign(payload),
         code: 'FOUND',
-        user: userData,
+        user: result,
       };
     });
   }
 
   public async register(user: User): Promise<any> {
     return this.userService.create(user).then((result) => {
-      return { code: 'CREATED', user: result };
+      const payload = { sub: result.id, username: result.name };
+      return {
+        access_token: this.jwtService.sign(payload),
+        code: 'CREATED',
+        user: result,
+      };
     });
   }
 
   async getById(id: number): Promise<any> {
     return await this.userService.findById(id).then(result => {
-      return { code: 'CREATED', user: result };
+      return {
+        code: 'CREATED',
+        user: {
+          id: result.id,
+          name: result.name,
+          result: result.email,
+        },
+      };
     });
   }
 

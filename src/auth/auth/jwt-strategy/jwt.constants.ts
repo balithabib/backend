@@ -1,3 +1,3 @@
 export const jwtConstants = {
-  secret: 'v%re$1%3432F',
+  secret: process.env.KEY_SECRET || 'key_secret_backend_auth',
 };

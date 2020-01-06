@@ -1,16 +1,18 @@
-import { Controller, Get, Param, Post, Req, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, Post, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { editFileNameBackground, imageFileFilter } from '../product/utils/upload.utils';
 import * as fs from 'fs';
 import { diskStorage } from 'multer';
+import { AuthGuard } from '@nestjs/passport';
+import { jwtConstants } from './auth/jwt-strategy/jwt.constants';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {
   }
 
-  // @UseGuards(AuthGuard('local'))
+  @UseGuards(AuthGuard('local'))
   @Post('login')
   async Login(@Req() req): Promise<any> {
     return await this.authService.login(req.body);
@@ -21,9 +23,10 @@ export class AuthController {
     return await this.authService.register(req.body);
   }
 
-  @Get('get/:id')
-  async getProduct(@Param('id') id: number): Promise<any> {
-    return await this.authService.getById(id);
+  @UseGuards(AuthGuard('jwt'))
+  @Get('profile')
+  async getProduct(@Req() req): Promise<any> {
+    return this.authService.getById(req.user.id);
   }
 
   @Post('set_background')

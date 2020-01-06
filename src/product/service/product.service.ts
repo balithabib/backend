@@ -29,7 +29,6 @@ export class ProductService {
     await this.findById(id).then(value => {
       product = value;
     });
-    console.log('files : ', dataBase64.length, product.thumbnails.length);
     product.thumbnails.push(dataBase64);
     return await this.productRepository.save(product);
   }

@@ -16,9 +16,6 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ default: '' })
-  avatar: string;
-
   @BeforeInsert()
   hashPassword() {
     this.password = bcrypt.hashSync(this.password, 10);

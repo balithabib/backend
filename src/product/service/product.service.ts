@@ -17,20 +17,6 @@ export class ProductService {
   }
 
   async getAllProduct(): Promise<Product[]> {
-    /*const products = [];
-    const count = await this.productRepository.count().then(value => {
-      return value;
-    });
-    for (let id = 0; id < count; id++) {
-      let a;
-      await this.findById(id).then(value => {
-        console.log(value);
-        a = value;
-      });
-      products.push(a);
-    }
-    console.log(products);
-    return products;*/
     return await this.productRepository.find();
   }
 

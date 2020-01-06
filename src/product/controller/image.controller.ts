@@ -1,8 +1,7 @@
-import { Body, Controller, Get, Param, Post, Res, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, Post, Res, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { editFileName, imageFileFilter } from '../utils/upload.utils';
 import { diskStorage } from 'multer';
-import { Base64 } from '../utils/base64.utils';
 import * as fs from 'fs';
 import { ProductService } from '../service/product.service';
 
@@ -22,7 +21,6 @@ export class ImageController {
     }),
   )
   async uploadedFile(@UploadedFile() file, @Param('id') id) {
-    console.log('product : ', id, file);
     await fs.readFile(file.path, 'binary', (err, data) => {
       const dataBase64 = Buffer.from(data, 'binary').toString('base64');
       this.productService.setImage(dataBase64, id);
@@ -46,7 +44,6 @@ export class ImageController {
   async uploadMultipleFiles(@UploadedFiles() files, @Param('id') id) {
     const response = [];
     const dataBase64 = [];
-    console.log('product : ', id, ', number of files : ', files.length);
     for (const file of files) {
       fs.readFile(file.path, 'binary', (err, data) => {
         dataBase64.push(Buffer.from(data, 'binary').toString('base64'));
@@ -58,12 +55,11 @@ export class ImageController {
       response.push(fileResponse);
     }
     await this.productService.setImage(dataBase64, id);
-    return response;
+    return { size: files.length, data: response };
   }
 
   @Get('get/:path')
   seeUploadedFile(@Param('path') image, @Res() res) {
-    console.log('Get : ', image);
     return res.sendFile(image, { root: './files' });
   }
 }

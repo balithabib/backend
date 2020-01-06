@@ -9,7 +9,6 @@ export class ProductController {
 
   @Post('set')
   async setProduct(@Req() req): Promise<any> {
-    console.log(req.body);
     return await this.productService.create(req.body);
   }
 
@@ -20,7 +19,6 @@ export class ProductController {
 
   @Get('get_all')
   async getAllProduct(): Promise<any> {
-    console.log('get all');
     return await this.productService.getAllProduct();
   }
 }

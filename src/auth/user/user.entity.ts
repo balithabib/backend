@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { Optional } from '@nestjs/common';
 
 @Entity('users')
 export class User {

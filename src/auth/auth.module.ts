@@ -4,7 +4,7 @@ import { User } from './user/user.entity';
 import { UserService } from './user/user.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth/auth.service';
-import { AuthController } from './auth.controller';
+import { AuthController } from './controller/auth.controller';
 import { JwtStrategy } from './auth/jwt-strategy/jwt-strategy.service';
 import { LocalStrategy } from './auth/local-strategy/local-strategy.service';
 import { jwtConstants } from './auth/jwt-strategy/jwt.constants';

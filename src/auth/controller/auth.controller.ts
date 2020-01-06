@@ -1,11 +1,10 @@
 import { Controller, Get, Param, Post, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { editFileNameBackground, imageFileFilter } from '../product/utils/upload.utils';
+import { editFileNameBackground, imageFileFilter } from '../../product/utils/upload.utils';
 import * as fs from 'fs';
 import { diskStorage } from 'multer';
 import { AuthGuard } from '@nestjs/passport';
-import { jwtConstants } from './auth/jwt-strategy/jwt.constants';
 
 @Controller('auth')
 export class AuthController {

@@ -13,4 +13,13 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column()
+  gender: string;
+
+  @Column()
+  date: string;
+
+  @Column()
+  address: string;
 }

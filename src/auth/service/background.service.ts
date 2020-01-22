@@ -40,9 +40,10 @@ export class BackgroundService {
 
   async getImage() {
     let randId;
-    await this.backgroundRepository.count().then(sizeBD => {
-      randId = (Math.round(Math.random() * sizeBD) + 1);
+    return await this.backgroundRepository.count().then(sizeBD => {
+      randId = Math.round(Math.random() * (sizeBD - 1)) + 1;
+      console.log(randId);
+      return this.findById(randId);
     });
-    return await this.findById(randId);
   }
 }

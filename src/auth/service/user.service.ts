@@ -8,11 +8,11 @@ export class UserService {
   constructor(@InjectRepository(User) private userRepository: Repository<User>) {
   }
 
-  async findByName(name: string) {
+  async findByEmail(email: string) {
     return await this.userRepository.findOne({
       where: [
         {
-          name,
+          email,
         },
       ],
     });

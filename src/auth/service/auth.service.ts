@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../model/user.entity';
+import {UserLogin} from '../model/UserLogin.';
 import * as bcrypt from 'bcrypt';
 
 export enum UserCode {
@@ -17,12 +18,12 @@ export class AuthService {
     private readonly jwtService: JwtService) {
   }
 
-  public async login(user: User): Promise<any> {
-    return this.validateUser(user.name, user.password).then((result) => {
+  public async login(user: UserLogin): Promise<any> {
+    return this.validateUser(user.email, user.password).then((result) => {
       if (!result) {
         return { code: UserCode.NOT_FOUND };
       }
-      const payload = { sub: result.id, username: result.name };
+      const payload = { sub: result.id, email: result.email };
       return {
         access_token: this.jwtService.sign(payload),
         code: UserCode.FOUND,
@@ -36,7 +37,7 @@ export class AuthService {
       return result;
     });
     return this.userService.create(user).then((result) => {
-      const payload = { sub: result.id, username: result.name };
+      const payload = { sub: result.id, email: result.email };
       return {
         access_token: this.jwtService.sign(payload),
         code: UserCode.CREATED,
@@ -52,14 +53,14 @@ export class AuthService {
         user: {
           id: result.id,
           name: result.name,
-          result: result.email,
+          email: result.email,
         },
       };
     });
   }
 
-  async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.userService.findByName(username);
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.userService.findByEmail(email);
     if (user && (await this.passwordsAreEqual(password, user.password))) {
       return user;
     }

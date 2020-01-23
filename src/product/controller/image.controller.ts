@@ -10,7 +10,7 @@ export class ImageController {
   constructor(private readonly productService: ProductService) {
   }
 
-  @Post('set_one/:id')
+  @Post('one/:id')
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
@@ -31,7 +31,7 @@ export class ImageController {
     };
   }
 
-  @Post('set_all/:id')
+  @Post('all/:id')
   @UseInterceptors(
     FilesInterceptor('images', 20, {
       storage: diskStorage({
@@ -59,7 +59,7 @@ export class ImageController {
   }
 
   @Get('get/:path')
-  seeUploadedFile(@Param('path') image, @Res() res) {
+  setUploadedFile(@Param('path') image, @Res() res) {
     return res.sendFile(image, { root: './files' });
   }
 }

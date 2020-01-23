@@ -20,6 +20,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@capacitor/cli": "^1.4.0",
+    "@capacitor/core": "^1.4.0",
     "@nestjs/common": "^6.7.2",
     "@nestjs/core": "^6.7.2",
     "@nestjs/jwt": "^6.1.1",
@@ -37,6 +39,7 @@
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
     "sqlite3": "^4.1.1",
+    "superagent": "^5.2.1",
     "typeorm": "^0.2.21"
   },
   "devDependencies": {

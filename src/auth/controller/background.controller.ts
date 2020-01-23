@@ -4,13 +4,13 @@ import { editFileNameBackground, imageFileFilter } from '../../product/utils/upl
 import { diskStorage } from 'multer';
 import { BackgroundService } from '../service/background.service';
 
-@Controller('auth/background')
+@Controller('background')
 export class BackgroundController {
 
   constructor(private backgroundService: BackgroundService) {
   }
 
-  @Get('get')
+  @Get()
   async getBackground(): Promise<any> {
     return await this.backgroundService.getImage().then(result => {
       return {
@@ -19,7 +19,7 @@ export class BackgroundController {
     });
   }
 
-  @Post('set')
+  @Post()
   @UseInterceptors(
     FilesInterceptor('images', 20, {
       storage: diskStorage({
@@ -29,7 +29,7 @@ export class BackgroundController {
       fileFilter: imageFileFilter,
     }),
   )
-  async uploadMultipleFiles(@UploadedFiles()files, @Param('id')id) {
+  async uploadMultipleFiles(@UploadedFiles()files) {
     return {
       size: files.length,
       data: await this.backgroundService.setImages(files),

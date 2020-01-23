@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { User } from './auth/model/user.entity';
 import { ProductModule } from './product/product.module';
-import { Product } from './product/model/product.entity';
+import { ProductEntity } from './product/model/product.entity';
 import { Background } from './auth/model/bcakground.entity';
 
 @Module({
@@ -13,10 +13,10 @@ import { Background } from './auth/model/bcakground.entity';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'base.sqlite',
-      entities: [User, Product, Background],
+      entities: [User, ProductEntity, Background],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User, Product])],
+    TypeOrmModule.forFeature([User, ProductEntity])],
   controllers: [AppController],
   providers: [AppService],
 })

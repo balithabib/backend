@@ -1,8 +1,8 @@
 export class CreateProductDto {
-  stock: number;
   name: string;
-  color: string;
+  type: string;
+  size: string;
   price: string;
-  comment: string[];
-  thumbnails: string[];
+  quantity: number;
+  description: string[];
 }

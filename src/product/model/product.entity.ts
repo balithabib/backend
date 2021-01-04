@@ -6,20 +6,23 @@ export class ProductEntity {
   id: number;
 
   @Column()
-  stock: number;
-
-  @Column()
   name: string;
 
   @Column()
-  color: string;
+  type: string;
+
+  @Column()
+  size: string;
 
   @Column()
   price: string;
 
-  @Column('simple-array')
-  comment: string[];
+  @Column()
+  quantity: number;
 
   @Column('simple-array')
-  thumbnails: string[];
+  description: string[];
+
+  @Column('simple-array')
+  images: string[];
 }

@@ -43,10 +43,11 @@ export class ImageController {
   )
   async uploadMultipleFiles(@UploadedFiles() files, @Param('id') id) {
     const response = [];
-    const dataBase64 = [];
+    // const dataBase64 = [];
     for (const file of files) {
       fs.readFile(file.path, 'binary', (err, data) => {
-        dataBase64.push(Buffer.from(data, 'binary').toString('base64'));
+        const dataBase64 = Buffer.from(data, 'binary').toString('base64');
+        this.productService.setImage(dataBase64, id);
       });
       const fileResponse = {
         originalname: file.originalname,
@@ -54,7 +55,7 @@ export class ImageController {
       };
       response.push(fileResponse);
     }
-    await this.productService.setImage(dataBase64, id);
+    // await this.productService.setImage(dataBase64, id);
     return { size: files.length, data: response };
   }
 
